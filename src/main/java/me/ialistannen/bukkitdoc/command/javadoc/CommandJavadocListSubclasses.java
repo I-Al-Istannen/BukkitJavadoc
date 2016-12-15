@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import me.ialistannen.bukkitdoc.Bot;
 import me.ialistannen.bukkitdoc.command.CommandExecuteResult.Type;
+import me.ialistannen.bukkitdoc.command.CommandExecutor;
 import me.ialistannen.bukkitdoc.command.javadoc.util.JavadocClass;
 import me.ialistannen.bukkitdoc.util.MessageUtil;
 import me.ialistannen.bukkitdoc.util.StringUtil;
@@ -123,7 +124,7 @@ class CommandJavadocListSubclasses extends CommandJavadoc {
      */
     @Override
     public String getUsage() {
-        return "me.javadoc listSubclasses <Class name>";
+        return CommandExecutor.PREFIX + "javadoc listSubclasses <Class name>";
     }
 
     /**

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import me.ialistannen.bukkitdoc.Bot;
 import me.ialistannen.bukkitdoc.command.CommandExecuteResult.Type;
+import me.ialistannen.bukkitdoc.command.CommandExecutor;
 import me.ialistannen.bukkitdoc.command.javadoc.util.JavadocClass;
 import me.ialistannen.bukkitdoc.command.javadoc.util.JavadocMethod;
 import me.ialistannen.bukkitdoc.util.MessageUtil;
@@ -146,7 +147,7 @@ class CommandJavadocListMethods extends CommandJavadoc {
      */
     @Override
     public String getUsage() {
-        return "me.javadoc listMethods <class name> [filter]";
+        return CommandExecutor.PREFIX + "javadoc listMethods <class name> [filter]";
     }
 
     /**

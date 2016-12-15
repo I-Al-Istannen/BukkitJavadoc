@@ -21,7 +21,7 @@ import sx.blah.discord.util.MessageBuilder.Styles;
  */
 public class CommandExecutor implements IListener<MessageReceivedEvent> {
 
-    private static final String PREFIX = "-";
+    public static final String PREFIX = "-";
     
     private Command root;
     private ExecutorService executor = new ThreadPoolExecutor(1, Integer.MAX_VALUE,
@@ -44,6 +44,7 @@ public class CommandExecutor implements IListener<MessageReceivedEvent> {
         this(new RootCommand());
         
         addCommandToRoot(new CommandJavadoc());
+        addCommandToRoot(new CommandExit());
     }
 
     /**

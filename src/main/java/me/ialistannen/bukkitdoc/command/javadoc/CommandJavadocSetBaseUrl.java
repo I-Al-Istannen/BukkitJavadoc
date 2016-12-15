@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import me.ialistannen.bukkitdoc.Bot;
 import me.ialistannen.bukkitdoc.command.Command;
 import me.ialistannen.bukkitdoc.command.CommandExecuteResult.Type;
+import me.ialistannen.bukkitdoc.command.CommandExecutor;
 import me.ialistannen.bukkitdoc.util.MessageUtil;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
@@ -60,7 +61,7 @@ public class CommandJavadocSetBaseUrl extends Command {
         }
 
         JavadocConstants.INSTANCE.setBaseUrl(baseUrl);
-        
+
         MessageUtil.sendMessage(
                 new MessageBuilder(Bot.getClient()).withChannel(channel)
                         .appendContent("Set the base url to", Styles.ITALICS)
@@ -88,8 +89,8 @@ public class CommandJavadocSetBaseUrl extends Command {
      */
     @Override
     public String getUsage() {
-        return "me.javadoc setBaseUrl <base url>\n"
-                + "\t\t\t| me.javadoc setBaseUrl <"
+        return CommandExecutor.PREFIX + "javadoc setBaseUrl <base url>\n"
+                + "\t\t\t| " + CommandExecutor.PREFIX + "javadoc setBaseUrl <"
                 + knownUrlsMap.keySet().stream().collect(Collectors.joining("|"))
                 + ">";
     }

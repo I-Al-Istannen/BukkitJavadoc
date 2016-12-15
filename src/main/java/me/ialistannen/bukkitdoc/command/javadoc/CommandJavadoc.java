@@ -14,6 +14,7 @@ import org.jsoup.nodes.Element;
 import me.ialistannen.bukkitdoc.Bot;
 import me.ialistannen.bukkitdoc.command.Command;
 import me.ialistannen.bukkitdoc.command.CommandExecuteResult.Type;
+import me.ialistannen.bukkitdoc.command.CommandExecutor;
 import me.ialistannen.bukkitdoc.command.javadoc.util.ClassListParser;
 import me.ialistannen.bukkitdoc.command.javadoc.util.JavadocClass;
 import me.ialistannen.bukkitdoc.command.javadoc.util.JavadocMethod;
@@ -370,7 +371,7 @@ public class CommandJavadoc extends Command {
      */
     @Override
     public String getUsage() {
-        return "me.javadoc <class name>[#method name]"
+        return CommandExecutor.PREFIX + "javadoc <class name>[#method name]"
                 + getChildren()
                 .stream()
                 .map(Command::getUsage)
