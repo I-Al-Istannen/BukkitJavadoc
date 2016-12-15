@@ -89,6 +89,10 @@ public class JavadocMethod {
                        ? link.indexOf('(', methodRefIndex)
                        : link.indexOf('-', methodRefIndex);
 
+        if (endIndex < 0) {
+            endIndex = link.length();
+        }
+        
         String methodName = link.substring(
                 methodRefIndex + 1,
                 endIndex

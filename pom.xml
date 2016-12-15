@@ -117,6 +117,7 @@
         <dependency>
             <groupId>com.github.I-Al-Istannen</groupId>
             <artifactId>ConvertHTMLToDiscord</artifactId>
+            <!--suppress MavenModelInspection -->
             <version>-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
