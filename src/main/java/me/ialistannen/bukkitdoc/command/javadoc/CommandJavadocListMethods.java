@@ -100,7 +100,6 @@ class CommandJavadocListMethods extends CommandJavadoc {
                 MessageUtil.sendMessage(
                         new MessageBuilder(Bot.getClient()).withChannel(channel)
                                 .withEmbed(embedBuilder.build())
-//                .withQuote(StringUtil.trimToSize(builder.toString(), 1988))
                 ),
                 TimeUnit.SECONDS, 20
         );

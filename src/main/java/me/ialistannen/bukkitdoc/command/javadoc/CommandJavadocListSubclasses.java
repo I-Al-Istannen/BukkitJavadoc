@@ -1,7 +1,6 @@
 package me.ialistannen.bukkitdoc.command.javadoc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Color;
 import java.util.Optional;
 
 import me.ialistannen.bukkitdoc.Bot;
@@ -9,13 +8,12 @@ import me.ialistannen.bukkitdoc.command.CommandExecuteResult.Type;
 import me.ialistannen.bukkitdoc.command.CommandExecutor;
 import me.ialistannen.bukkitdoc.command.javadoc.util.JavadocClass;
 import me.ialistannen.bukkitdoc.util.MessageUtil;
+import me.ialistannen.bukkitdoc.util.NumberUtil;
 import me.ialistannen.bukkitdoc.util.StringUtil;
-import me.ialistannen.htmltodiscord.util.StringUtils;
-import me.ialistannen.htmltodiscord.util.TableCreator;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
+import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MessageBuilder;
-import sx.blah.discord.util.MessageBuilder.Styles;
 
 
 /**
@@ -26,8 +24,8 @@ class CommandJavadocListSubclasses extends CommandJavadoc {
     /**
      * Executes the command
      *
-     * @param channel   The channel the message was sent in
-     * @param message   The message that was sent
+     * @param channel The channel the message was sent in
+     * @param message The message that was sent
      * @param arguments The arguments after the command name
      */
     @Override
@@ -55,55 +53,32 @@ class CommandJavadocListSubclasses extends CommandJavadoc {
 
         JavadocClass javadocClass = classOptional.get();
 
-        int width = 75;
 
-        TableCreator creator = new TableCreator(() -> " | ", width);
+        StringBuilder builder = new StringBuilder();
 
-        List<JavadocClass> subclasses = javadocClass.getSubclasses();
+        EmbedBuilder embedBuilder = new EmbedBuilder()
+                .withColor(new Color(NumberUtil.getRandomInt()));
 
-        int max = subclasses
-                .stream()
-                .mapToInt(value -> value.getName().length()).max()
-                .orElse(1);
-
-        int columnAmount = 1;
-
-        while ((columnAmount + 1) * " | ".length() + max * columnAmount < width) {
-            columnAmount++;
-        }
-        if (columnAmount > 1) {
-            columnAmount--;
-        }
-
-        outer:
-        for (int i = 0; i < subclasses.size(); i++) {
-            List<TableCreator.Column> columns = new ArrayList<>(columnAmount);
-            for (int j = 0; j < columnAmount; j++) {
-                int index = j + i;
-                if (index >= subclasses.size()) {
-                    creator.addLine(length -> StringUtils.repeat("-", length), columns);
-                    break outer;
+        {
+            for (JavadocClass subClass : javadocClass.getSubclasses()) {
+                if (builder.length() > 1000) {
+                    String content = "```\n" + StringUtil.trimToSize(builder.toString(), 1010) + "\n```";
+                    embedBuilder.appendField("Subclasses for " + javadocClass.getName(), content, false);
+                    builder = new StringBuilder();
                 }
-                columns.add(() -> subclasses.get(index).getName());
-            }
-            i += columnAmount - 1;
-            creator.addLine(length -> StringUtils.repeat("-", length), columns);
-        }
 
-        String table;
-        if (!subclasses.isEmpty()) {
-            table = StringUtil.trimToSize(creator.build().print(), 1900);
-        }
-        else {
-            table = "None";
+                builder.append(subClass.getName())
+                        .append("\n");
+            }
+            String content = "```\n" + StringUtil.trimToSize(builder.toString(), 1010) + "\n```";
+            embedBuilder.appendField("Subclasses for " + javadocClass.getName(), content, true);
         }
 
         MessageBuilder finalMessage = new MessageBuilder(Bot.getClient()).withChannel(channel)
-                .appendContent("All known subclasses:", Styles.BOLD_ITALICS)
-                .appendQuote(table);
+                .withEmbed(embedBuilder.build());
 
         MessageUtil.sendMessage(finalMessage);
-        
+
         return Type.SUCCESSFULLY_INVOKED;
     }
 
