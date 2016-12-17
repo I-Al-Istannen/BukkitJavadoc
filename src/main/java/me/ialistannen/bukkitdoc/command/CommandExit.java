@@ -42,8 +42,8 @@ public class CommandExit extends Command {
 
         MessageUtil.sendMessage(new MessageBuilder(Bot.getClient()).withChannel(channel)
                 .appendContent("Shutting down!", Styles.BOLD_ITALICS)
-                .appendContent(" ")
-                .appendContent("\nInitiated by", Styles.ITALICS)
+                .appendContent("\n")
+                .appendContent("Initiated by", Styles.ITALICS)
                 .appendContent(" ")
                 .appendContent(author.getName(), Styles.INLINE_CODE)
         );
