@@ -108,6 +108,18 @@ public class CommandJavadoc extends Command {
                     .withAuthorIcon(getIconUrlForClass(javadocClass))
                     .withAuthorUrl(javadocClass.getTargetUrl());
 
+            // Add super classes
+            if (javadocClass.getDeclaration().text().contains("extends")) {
+                String extendContent = javadocClass.getDeclaration().text().replace("\n", "");
+                extendContent = extendContent.substring(extendContent.indexOf("extends") + "extends".length());
+                extendContent = extendContent.trim();
+
+                description = "```\n"
+                        + extendContent
+                        + "\n```\n"
+                        + description;
+            }
+
             embedBuilder.withDesc(StringUtil.trimToSize(description, 2048));
 
             MessageUtil.sendMessage(
