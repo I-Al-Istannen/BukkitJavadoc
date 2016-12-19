@@ -23,7 +23,7 @@ public class StringUtil {
      * @return A mostly stripped version of it
      */
     public static String stripFormatting(String string) {
-        String replaced = string.replaceAll("[]\\[+&|!(){}^\"~*?:\\\\-]", "");
+        String replaced = string.replaceAll("[\\[+&|!{}^\"~*?:\\\\-]", "");
 
         Matcher matcher = LINK_PATTERN.matcher(replaced);
         while (matcher.find()) {
