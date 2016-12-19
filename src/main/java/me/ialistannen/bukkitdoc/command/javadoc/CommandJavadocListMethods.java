@@ -87,9 +87,13 @@ class CommandJavadocListMethods extends CommandJavadoc {
                 }
 
                 builder.append(method.getName())
-                        .append(" [")
-                        .append(joinParamNames(method.getParameterTypes()))
-                        .append("]");
+                        .append("(");
+
+                if(!method.getParameterTypes().isEmpty()) {
+                    builder.append(joinParamNames(method.getParameterTypes()));
+                }
+
+                builder.append(")");
                 builder.append("\n");
             }
             String content = "```\n" + StringUtil.trimToSize(builder.toString(), 1010) + "\n```";
