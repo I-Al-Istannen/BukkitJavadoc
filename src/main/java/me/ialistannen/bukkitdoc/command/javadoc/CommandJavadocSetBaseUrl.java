@@ -11,7 +11,6 @@ import me.ialistannen.bukkitdoc.command.CommandExecutor;
 import me.ialistannen.bukkitdoc.util.MessageUtil;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.util.MessageBuilder;
 import sx.blah.discord.util.MessageBuilder.Styles;
 
@@ -38,20 +37,12 @@ public class CommandJavadocSetBaseUrl extends Command {
      */
     @Override
     public Type execute(IChannel channel, IMessage message, String[] arguments) {
-        if (arguments.length < 1) {
-            return Type.SEND_USAGE;
+        if (!MessageUtil.checkAndSendAdminOnlyMessage(channel, message)) {
+            return Type.SUCCESSFULLY_INVOKED;
         }
 
-        if (!message.getAuthor().getPermissionsForGuild(channel.getGuild()).contains(Permissions.ADMINISTRATOR)) {
-            MessageBuilder builder = new MessageBuilder(Bot.getClient()).withChannel(channel)
-                    .appendContent("Error!", Styles.BOLD_ITALICS)
-                    .appendContent(" ")
-                    .appendContent("You do not have the permission")
-                    .appendContent(" ")
-                    .appendContent("Administrator", Styles.INLINE_CODE)
-                    .appendContent(".");
-            MessageUtil.sendMessage(builder);
-            return Type.SUCCESSFULLY_INVOKED;
+        if (arguments.length < 1) {
+            return Type.SEND_USAGE;
         }
 
         String baseUrl = arguments[0];

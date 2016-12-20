@@ -5,14 +5,14 @@ import me.ialistannen.bukkitdoc.command.CommandExecuteResult.Type;
 import me.ialistannen.bukkitdoc.util.MessageUtil;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.MessageBuilder;
 import sx.blah.discord.util.MessageBuilder.Styles;
 
 /**
- * Exists the bot
+ * The version
  */
-public class CommandExit extends Command {
+public class CommandVersion extends Command {
+    
     /**
      * Executes the command
      *
@@ -22,19 +22,16 @@ public class CommandExit extends Command {
      */
     @Override
     public Type execute(IChannel channel, IMessage message, String[] arguments) {
-        if(!MessageUtil.checkAndSendAdminOnlyMessage(channel, message)) {
+        if (!MessageUtil.checkAndSendAdminOnlyMessage(channel, message)) {
             return Type.SUCCESSFULLY_INVOKED;
         }
-        IUser author = message.getAuthor();
 
-        MessageUtil.sendMessage(new MessageBuilder(Bot.getClient()).withChannel(channel)
-                .appendContent("Shutting down!", Styles.BOLD_ITALICS)
-                .appendContent("\n")
-                .appendContent("Initiated by", Styles.ITALICS)
-                .appendContent(" ")
-                .appendContent(author.getName(), Styles.INLINE_CODE)
+        MessageUtil.sendMessage(
+                new MessageBuilder(Bot.getClient()).withChannel(channel)
+                        .appendContent("Version:", Styles.BOLD_ITALICS)
+                        .appendContent(" ")
+                        .appendContent(Bot.getVersion(), Styles.INLINE_CODE)
         );
-        System.exit(0);
         return Type.SUCCESSFULLY_INVOKED;
     }
 
@@ -45,7 +42,7 @@ public class CommandExit extends Command {
      */
     @Override
     public String getKeyword() {
-        return "exit";
+        return "version";
     }
 
     /**
@@ -55,7 +52,7 @@ public class CommandExit extends Command {
      */
     @Override
     public String getUsage() {
-        return CommandExecutor.PREFIX + "exit";
+        return CommandExecutor.PREFIX + "version";
     }
 
     /**
@@ -65,6 +62,6 @@ public class CommandExit extends Command {
      */
     @Override
     public String getDescription() {
-        return "Exits the bot";
+        return "Shows the version";
     }
 }

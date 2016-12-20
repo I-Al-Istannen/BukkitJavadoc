@@ -16,6 +16,8 @@ import sx.blah.discord.util.RateLimitException;
 public class Bot {
     private static Bot instance;
 
+    private static final String VERSION = "1.0.1-SNAPSHOT";
+
     private IDiscordClient client;
 
     private Bot(String token) throws DiscordException, RateLimitException {
@@ -39,13 +41,22 @@ public class Bot {
         return instance;
     }
 
+    /**
+     * Returns the Bot version
+     *
+     * @return The Bot version
+     */
+    public static String getVersion() {
+        return VERSION;
+    }
+
     public static void main(String[] args) throws Exception {
         if (args.length < 1) {
             System.out.println("Error! No token given. Arguments: <token>");
             return;
         }
         String token = args[0];
-        if(args.length >= 2) {
+        if (args.length >= 2) {
             String path = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
             token = Files.readAllLines(Paths.get(path)).get(0);
         }
