@@ -102,7 +102,7 @@ public class CommandJavadoc extends Command {
                                   ? declaration.substring(0, declaration.indexOf("extends"))
                                   : declaration;
             EmbedBuilder embedBuilder = new EmbedBuilder()
-                    .withColor(new Color(NumberUtil.getRandomInt()));
+                    .withColor(getColorForClass(javadocClass));
 
             embedBuilder.withAuthorName(StringUtil.stripFormatting(nameWithType))
                     .withAuthorIcon(getIconUrlForClass(javadocClass))
@@ -281,6 +281,22 @@ public class CommandJavadoc extends Command {
             return "https://www.jetbrains.com/help/img/idea/2016.3/classTypeFinal.png";
         }
         return "https://www.jetbrains.com/help/img/idea/2016.3/classTypeJavaClass.png";
+    }
+
+    private Color getColorForClass(JavadocClass javadocClass) {
+        if (javadocClass.isAbstract()) {
+            return Color.LIGHT_GRAY;
+        }
+        else if (javadocClass.isInterface()) {
+            return new Color(85, 66, 159);
+        }
+        else if (javadocClass.isEnum()) {
+            return new Color(142, 92, 36);
+        }
+        else if (javadocClass.isFinal()) {
+            return Color.RED;
+        }
+        return Color.GREEN;
     }
 
     /**
