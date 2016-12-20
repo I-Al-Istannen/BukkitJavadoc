@@ -46,6 +46,7 @@ public class CommandJavadoc extends Command {
             addChild(new CommandJavadocListMethods());
             addChild(new CommandJavadocListSubclasses());
             addChild(new CommandJavadocSetBaseUrl());
+            addChild(new CommandJavadocPackage());
         }
     }
 
