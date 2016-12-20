@@ -294,7 +294,7 @@ public class CommandJavadoc extends Command {
             return new Color(142, 92, 36);
         }
         else if (javadocClass.isFinal()) {
-            return Color.RED;
+            return new Color(255, 65, 59);
         }
         return Color.GREEN;
     }
