@@ -140,7 +140,7 @@ public class CommandJavadoc extends Command {
                 extendContent = extendContent.substring(extendContent.indexOf("extends") + "extends".length());
                 extendContent = extendContent.trim();
 
-                description = "```\n"
+                description = "```java\n"
                         + extendContent
                         + "\n```\n"
                         + description;
