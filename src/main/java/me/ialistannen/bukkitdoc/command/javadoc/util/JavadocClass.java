@@ -88,6 +88,30 @@ public class JavadocClass {
         return getDeclaration().text().contains("final");
     }
 
+    // @formatter:off
+    /**
+     * Returns the type of the class.
+     * 
+     *     <ul>
+     *         <li>"enum"</li>
+     *         <li>"interface"</li>
+     *         <li>"class"</li>
+     *     </ul>
+     * 
+     * @return The type of the class
+     */
+    // @formatter:on
+    public String getClassTypeName() {
+        if (isEnum()) {
+            return "enum";
+        }
+        else if (isInterface()) {
+            return "interface";
+        }
+
+        return "class";
+    }
+
     /**
      * @return The description of the class
      */

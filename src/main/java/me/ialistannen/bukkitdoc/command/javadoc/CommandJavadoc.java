@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
@@ -57,6 +59,7 @@ public class CommandJavadoc extends Command {
      * @param message The message that was sent
      * @param arguments The arguments after the command name
      */
+    @SuppressWarnings("Duplicates")
     @Override
     public Type execute(IChannel channel, IMessage message, String[] arguments) {
         if (arguments.length < 1) {
@@ -102,6 +105,28 @@ public class CommandJavadoc extends Command {
             String nameWithType = declaration.contains("extends")
                                   ? declaration.substring(0, declaration.indexOf("extends"))
                                   : declaration;
+
+            // Break down Annotations
+            String descriptionPrefix = "";
+            nameWithType = StringUtil.stripFormatting(nameWithType);
+            {
+                Pattern pattern = Pattern.compile("((@\\S+?\\s?\\([\\S\\s]+?\\))|(@(?!interface)\\S+))");
+                Matcher matcher = pattern.matcher(nameWithType);
+                boolean found = false;
+                while (matcher.find()) {
+                    found = true;
+                    descriptionPrefix += matcher.group(1) + "\n";
+                    nameWithType = matcher.replaceFirst("");
+                    matcher = pattern.matcher(nameWithType);
+                }
+                if (found) {
+                    descriptionPrefix = "```java\n" + descriptionPrefix + "\n```\n";
+                }
+                descriptionPrefix = descriptionPrefix.replaceAll(" ,", ", ");
+                descriptionPrefix = descriptionPrefix.replaceAll("=(\\S)", "= $1");
+            }
+
+
             EmbedBuilder embedBuilder = new EmbedBuilder()
                     .withColor(getColorForClass(javadocClass));
 
@@ -111,7 +136,7 @@ public class CommandJavadoc extends Command {
 
             // Add super classes
             if (javadocClass.getDeclaration().text().contains("extends")) {
-                String extendContent = javadocClass.getDeclaration().text().replace("\n", "");
+                String extendContent = javadocClass.getDeclaration().text().replace("\n", " ");
                 extendContent = extendContent.substring(extendContent.indexOf("extends") + "extends".length());
                 extendContent = extendContent.trim();
 
@@ -120,6 +145,7 @@ public class CommandJavadoc extends Command {
                         + "\n```\n"
                         + description;
             }
+            description = descriptionPrefix + description;
 
             embedBuilder.withDesc(StringUtil.trimToSize(description, 2048));
 
@@ -237,12 +263,32 @@ public class CommandJavadoc extends Command {
 
             String name = description.child(0).text();
 
+            // Break down Annotations
+            String descriptionPrefix = "";
+            {
+                Pattern pattern = Pattern.compile("(@\\S+\\n?)");
+                Matcher matcher = pattern.matcher(name);
+                boolean found = false;
+                while (matcher.find()) {
+                    found = true;
+                    descriptionPrefix += matcher.group(1) + "\n";
+                    name = matcher.replaceFirst("");
+                    matcher = pattern.matcher(name);
+                }
+                if (found) {
+                    descriptionPrefix = "```java\n" + descriptionPrefix + "\n```\n";
+                }
+                descriptionPrefix = descriptionPrefix.replaceAll(" ,", ", ");
+                descriptionPrefix = descriptionPrefix.replaceAll("=(\\S)", "= $1");
+            }
+
             {
                 int endIndex = name.contains("\n") ? name.indexOf("\n") : name.length();
                 name = name.substring(0, endIndex);
             }
 
             converted = converted.substring(converted.indexOf("\n") + 1);
+            converted = descriptionPrefix + converted;
 
             EmbedBuilder embedBuilder = new EmbedBuilder()
                     .withAuthorIcon(getIconUrlForMethod(method))

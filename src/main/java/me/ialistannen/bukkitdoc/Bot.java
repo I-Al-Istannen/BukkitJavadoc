@@ -16,7 +16,7 @@ import sx.blah.discord.util.RateLimitException;
 public class Bot {
     private static Bot instance;
 
-    private static final String VERSION = "1.0.2-SNAPSHOT";
+    private static final String VERSION = "1.0.3-SNAPSHOT";
 
     private IDiscordClient client;
 
