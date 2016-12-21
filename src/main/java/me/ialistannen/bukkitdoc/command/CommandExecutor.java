@@ -46,6 +46,7 @@ public class CommandExecutor implements IListener<MessageReceivedEvent> {
         addCommandToRoot(new CommandJavadoc());
         addCommandToRoot(new CommandExit());
         addCommandToRoot(new CommandVersion());
+        addCommandToRoot(new CommandLog());
     }
 
     /**
