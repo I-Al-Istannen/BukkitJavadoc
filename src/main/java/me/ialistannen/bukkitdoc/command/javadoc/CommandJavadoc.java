@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import me.ialistannen.bukkitdoc.Bot;
 import me.ialistannen.bukkitdoc.command.Command;
@@ -42,6 +44,8 @@ import static sx.blah.discord.util.MessageBuilder.Styles.ITALICS;
  */
 public class CommandJavadoc extends Command {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(CommandJavadoc.class);
+    
     {
         // Ugly. So Ugly.
         if (getClass() == CommandJavadoc.class) {
@@ -108,9 +112,9 @@ public class CommandJavadoc extends Command {
 
             // Break down Annotations
             String descriptionPrefix = "";
-            System.out.println("Prev: " + nameWithType);
+            LOGGER.info("Prev: " + nameWithType);
             nameWithType = StringUtil.stripFormatting(nameWithType);
-            System.out.println("After: " + nameWithType);
+            LOGGER.info("After: " + nameWithType);
             {
                 Pattern pattern = Pattern.compile("((@\\S+?\\s?\\([\\S\\s]+?\\))|(@(?!interface)\\S+))");
                 Matcher matcher = pattern.matcher(nameWithType);
