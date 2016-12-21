@@ -84,6 +84,14 @@
             <version>dev-SNAPSHOT</version>
         </dependency>
 
+        <!--INCLUDED FOR THE MESSAGE STRIPPING-->
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>LATEST</version>
+            <scope>compile</scope>
+        </dependency>
+        
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

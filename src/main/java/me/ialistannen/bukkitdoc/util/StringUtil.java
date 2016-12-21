@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import net.dv8tion.jda.core.MessageBuilder;
+
 /**
  * Some static String utility functions
  */
@@ -23,7 +25,7 @@ public class StringUtil {
      * @return A mostly stripped version of it
      */
     public static String stripFormatting(String string) {
-        String replaced = string.replaceAll("[\\[+&|!{}^\"~*?:\\\\-]", "");
+        String replaced = new MessageBuilder().append(string).build().getStrippedContent();
 
         Matcher matcher = LINK_PATTERN.matcher(replaced);
         while (matcher.find()) {
