@@ -108,7 +108,9 @@ public class CommandJavadoc extends Command {
 
             // Break down Annotations
             String descriptionPrefix = "";
+            System.out.println("Prev: " + nameWithType);
             nameWithType = StringUtil.stripFormatting(nameWithType);
+            System.out.println("After: " + nameWithType);
             {
                 Pattern pattern = Pattern.compile("((@\\S+?\\s?\\([\\S\\s]+?\\))|(@(?!interface)\\S+))");
                 Matcher matcher = pattern.matcher(nameWithType);

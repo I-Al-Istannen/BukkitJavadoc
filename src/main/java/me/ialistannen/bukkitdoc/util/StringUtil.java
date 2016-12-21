@@ -27,7 +27,8 @@ public class StringUtil {
 
         Matcher matcher = LINK_PATTERN.matcher(replaced);
         while (matcher.find()) {
-            replaced = matcher.replaceAll(matcher.group(1));
+            replaced = matcher.replaceFirst(matcher.group(1));
+            matcher = LINK_PATTERN.matcher(replaced);
         }
 
         return replaced;
