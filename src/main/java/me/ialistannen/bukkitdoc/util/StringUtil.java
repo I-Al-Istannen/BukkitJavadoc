@@ -39,7 +39,7 @@ public class StringUtil {
     /**
      * Trims a string to a given size
      *
-     * @param string    The String to trim
+     * @param string The String to trim
      * @param maxLength The max length
      *
      * @return The trimmed string
@@ -55,7 +55,7 @@ public class StringUtil {
      * Joins the Array to a single String
      *
      * @param delimiter The delimiter to use
-     * @param strings   The Strings to use
+     * @param strings The Strings to use
      *
      * @return The joined String
      */
