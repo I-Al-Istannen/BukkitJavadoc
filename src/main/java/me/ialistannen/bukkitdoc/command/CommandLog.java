@@ -3,6 +3,7 @@ package me.ialistannen.bukkitdoc.command;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -43,7 +44,10 @@ public class CommandLog extends Command {
         Path path = Paths.get("BukkitDocsLog.log");
 
         try {
-            channel.sendFile(path.toFile());
+            MessageUtil.sendSelfDestructingMessage(
+                    channel.sendFile(path.toFile()),
+                    TimeUnit.SECONDS, 10
+            );
         } catch (FileNotFoundException e) {
             LOGGER.warn("Error, log file not found!", e);
         } catch (DiscordException | RateLimitException | MissingPermissionsException e) {
