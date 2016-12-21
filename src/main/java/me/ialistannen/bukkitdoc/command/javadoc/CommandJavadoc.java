@@ -137,7 +137,8 @@ public class CommandJavadoc extends Command {
             // Add super classes
             if (javadocClass.getDeclaration().text().contains("extends")) {
                 String extendContent = javadocClass.getDeclaration().text().replace("\n", " ");
-                extendContent = extendContent.substring(extendContent.indexOf("extends") + "extends".length());
+                extendContent = javadocClass.getClassTypeName() + " " + extendContent.substring(extendContent.indexOf
+                        ("extends"));
                 extendContent = extendContent.trim();
 
                 description = "```java\n"
