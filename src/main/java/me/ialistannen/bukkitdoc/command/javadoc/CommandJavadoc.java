@@ -290,8 +290,18 @@ public class CommandJavadoc extends Command {
                 name = name.substring(0, endIndex);
             }
 
-            converted = converted.substring(converted.indexOf("\n") + 1);
+            {
+                Matcher matcher = Pattern.compile("(.+" + method.getName() + "\\(.*\\))").matcher(converted);
+                if (matcher.find()) {
+                    converted = converted.substring(matcher.end()).trim();
+                }
+            }
+
             converted = descriptionPrefix + converted;
+
+            // make the whitespaces in the title bigger :)
+            // '\u00A0' is a "non breaking space" (normal whitespaces are killed by discord)
+            name = name.replace('\u00A0', ' ').replace(" ", "\u00A0\u00A0\u00A0");
 
             EmbedBuilder embedBuilder = new EmbedBuilder()
                     .withAuthorIcon(getIconUrlForMethod(method))
