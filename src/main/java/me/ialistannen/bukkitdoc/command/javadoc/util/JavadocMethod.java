@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import static java.util.regex.Pattern.quote;
+
 /**
  * A Javadoc method
  */
@@ -191,11 +193,11 @@ public class JavadocMethod {
                                 return false;
                             }
                             String paramParenthesis = matcher.group(1).replace("\n", "").replaceAll("\\s+", " ");
-                            if (!Pattern.compile("^" + unqualifiedName + "|,.?" + unqualifiedName,
+                            if (!Pattern.compile("^" + quote(unqualifiedName) + "|,.?" + quote(unqualifiedName),
                                     Pattern.CASE_INSENSITIVE)
                                     .matcher(paramParenthesis)
                                     .find()
-                                    && !Pattern.compile("^" + parameterType + "|,.?" + parameterType,
+                                    && !Pattern.compile("^" + quote(parameterType) + "|,.?" + quote(parameterType),
                                     Pattern.CASE_INSENSITIVE)
                                     .matcher(paramParenthesis)
                                     .find()) {

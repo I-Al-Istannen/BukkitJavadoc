@@ -52,7 +52,8 @@ class MethodParser {
                     List<String> parameterTypes = new ArrayList<>();
 
                     String descriptionString = element.attr("href").replace("\n", "");
-                    descriptionString = StringUtil.stripFormatting(descriptionString);
+                    descriptionString = StringUtil.stripFormatting(descriptionString)
+                            .replace(":A", "[]");
 
                     Matcher matcher = Pattern.compile("\\((.*?)\\)").matcher(descriptionString);
                     if (matcher.find()) {
