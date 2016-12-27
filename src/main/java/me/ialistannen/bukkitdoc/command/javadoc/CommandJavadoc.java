@@ -291,7 +291,14 @@ public class CommandJavadoc extends Command {
             }
 
             {
-                Matcher matcher = Pattern.compile("(.+" + Pattern.quote(method.getName()) + "\\(.*(\\)|,))")
+                String pattern;
+                if (method.getParameterTypes().size() > 1) {
+                    pattern = "(.+" + Pattern.quote(method.getName()) + "\\(.*,)";
+                }
+                else {
+                    pattern = "(.+" + Pattern.quote(method.getName()) + "\\(.*(\\)|,))";
+                }
+                Matcher matcher = Pattern.compile(pattern)
                         .matcher(converted);
                 if (matcher.find()) {
                     converted = converted.substring(matcher.end()).trim();
